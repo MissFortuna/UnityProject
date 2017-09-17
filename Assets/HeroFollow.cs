@@ -5,9 +5,9 @@ using UnityEngine;
 public class HeroFollow : MonoBehaviour {
 
 	public HeroRabbit rabit;
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 		Transform rabit_transform = rabit.transform;
 
 		Transform camera_transform = this.transform;
@@ -20,4 +20,8 @@ public class HeroFollow : MonoBehaviour {
 
 		camera_transform.position = camera_position;
 	}
+
+    
+
+
 }

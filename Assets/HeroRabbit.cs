@@ -10,6 +10,21 @@ public class HeroRabbit : MonoBehaviour {
     public float MaxJumpTime = 2f;
     public float JumpSpeed = 2f;
 
+    Transform heroParent = null;
+    Rigidbody2D rabbitBody = null;
+    SpriteRenderer sr = null;
+	Animator animator = null;
+
+    bool is_dead = false;
+    public int currentHealth = 1;
+    float time_to_wait = 0.0f;
+    
+    //bonus
+    float red_state_time = 4.0f;
+    public bool red_state = false;
+    public bool is_big = false;
+    public bool make_big = false;
+
     Rigidbody2D myBody = null;
 	// Use this for initialization
 	void Start () {
@@ -95,5 +110,71 @@ public class HeroRabbit : MonoBehaviour {
             animator.SetBool("jump", true);
         }
         */
+
+        if (this.is_dead)
+        {
+            Dead();
+        }
+
+        //bonus task
+        if (red_state)
+        {
+            red_state_time -= Time.deltaTime;
+            sr.color = Color.red;
+            if (red_state_time <= 0) red_state = false;
+        }
+        else sr.color = Color.white;
+
+        if (!is_big && make_big)
+        {
+            this.transform.localScale = new Vector3(3, 3, 0);
+            is_big = true;
+        }
+        else if (is_big && !make_big)
+        {
+
+            this.transform.localScale = new Vector3(2, 2, 0);
+            is_big = false;
+        }
+    }
+    
+    static void SetNewParent(Transform obj, Transform new_parent)
+    {
+        if (obj.transform.parent != new_parent)
+        {
+            Vector3 pos = obj.transform.position;
+
+            obj.transform.parent = new_parent;
+
+            obj.transform.position = pos;
+        }
+    }
+   public void Dead()
+    {
+        animator.SetBool("die", true);
+        animator.SetBool("idle", false);
+        time_to_wait -= Time.deltaTime;
+        if (time_to_wait <= 0)
+        {
+
+            is_dead = false;
+            animator.SetBool("die", false);
+            LevelController.current.onRabitDeath(this);
+        }
+        else return;
+    }
+    public void EatMushroom()
+    {
+        if (!is_big && make_big)
+        {
+            this.transform.localScale = new Vector3(3, 3, 0);
+            is_big = true;
+        }
+        else if (is_big && !make_big)
+        {
+
+            this.transform.localScale = new Vector3(2, 2, 0);
+            is_big = false;
+        }
     }
 }
