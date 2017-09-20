@@ -30,6 +30,7 @@ public class HeroRabbit : MonoBehaviour {
 	void Start () {
 		myBody = this.GetComponent<Rigidbody2D> ();
         LevelController.current.setStartPosition(transform.position);
+        this.heroParent = this.transform.parent;
 	}
 	
 	// Update is called once per frame
@@ -52,6 +53,8 @@ public class HeroRabbit : MonoBehaviour {
 			animator.SetBool ("idle", true);
 		}
 
+        
+
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
 		if(value < 0) {
 			sr.flipX = true;
@@ -63,13 +66,22 @@ public class HeroRabbit : MonoBehaviour {
         Vector3 to = transform.position + Vector3.down * 0.1f;
         int layer_id = 1 << LayerMask.NameToLayer("Ground");
         RaycastHit2D hit = Physics2D.Linecast(from, to, layer_id);
+
         if (hit)
         {
             isGrounded = true;
+
+            if (hit.transform != null
+            && hit.transform.GetComponent<MovingPlatform>() != null)
+            {
+                //Приліпаємо до платформи
+                SetNewParent(this.transform, hit.transform);
+            }
         }
         else
         {
             isGrounded = false;
+            SetNewParent(this.transform, this.heroParent);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
