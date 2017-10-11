@@ -6,7 +6,7 @@ public class Mushroom : Collectable
 {
     protected override void OnRabitHit(HeroRabbit rabit)
     {
+		rabit.EatMushroom(true);
         this.CollectedHide();
-        rabit.EatMushroom();
     }
 }

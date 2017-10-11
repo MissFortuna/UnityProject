@@ -9,10 +9,13 @@ public class Bomb : Collectable
         if (rabit.is_big)
         {
             rabit.is_big = false;
+            rabit.MakeSmall();
         }
         else
         {
-            rabit.Dead();
+            //rabit.Dead();
+			rabit.is_dead=true;
+			rabit.Play_Die(true);
         }
         this.CollectedHide();
     }

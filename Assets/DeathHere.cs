@@ -9,7 +9,7 @@ public class DeathHere : MonoBehaviour {
 
         if (rabit != null)
         {
-            LevelController.current.onRabitDeath(rabit);
+			LevelController.current.onRabitDeath(rabit);
         }
     }
 }

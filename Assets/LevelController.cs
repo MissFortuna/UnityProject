@@ -19,6 +19,11 @@ public class LevelController : MonoBehaviour
 
     public void onRabitDeath(HeroRabbit rabit)
     {
+		if (rabit.is_big)
+		{
+			rabit.is_big = false;
+			rabit.MakeSmall();
+		}
         rabit.transform.position = this.startingPosition;
     }
 }
