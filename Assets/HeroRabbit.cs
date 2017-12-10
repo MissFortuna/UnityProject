@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class HeroRabbit : MonoBehaviour {
 	public float speed=1;
-    bool isGrounded = false;
+
+	public static HeroRabbit lastRabbit = null;
+	public float life=3;
+
+	bool isGrounded = false;
     bool JumpActive = false;
     float JumpTime = 0f;
     public float MaxJumpTime = 2f;
@@ -28,7 +32,13 @@ public class HeroRabbit : MonoBehaviour {
     public bool is_big = false;
     public bool make_big = false;
 
+
     Rigidbody2D myBody = null;
+
+	void Awake() {
+		lastRabbit = this;
+	}
+
 	// Use this for initialization
 	void Start () {
 		myBody = this.GetComponent<Rigidbody2D> ();
